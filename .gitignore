@@ -1,4 +1,4 @@
 .DS_store
 *.txt
-.test.c
-.a.out
+test.c
+a.out
