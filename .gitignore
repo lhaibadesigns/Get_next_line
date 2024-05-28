@@ -1,4 +1,8 @@
 .DS_store
 *.txt
 test.c
+<<<<<<< HEAD
 a.out
+=======
+a.out
+>>>>>>> refs/remotes/origin/main
