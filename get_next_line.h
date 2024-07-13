@@ -6,7 +6,7 @@
 /*   By: ael-haib <ael-haib@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:16:41 by ael-haib          #+#    #+#             */
-/*   Updated: 2024/07/11 17:16:48 by ael-haib         ###   ########.fr       */
+/*   Updated: 2024/07/13 14:57:26 by ael-haib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 #  define BUFFER_SIZE 1
 # endif
 
-void	*get_freed(char **p1, char **p2);
-char	*get_line_(char **buffer);
+void	*get_free(char **p1, char **p2);
+char	*get_the_line(char **buffer);
 char	*get_next_line(int fd);
 char	*get_join(char *s1, char *s2);
 char	*ft_substr(char const *s, unsigned int start, size_t len);

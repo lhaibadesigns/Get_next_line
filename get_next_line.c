@@ -6,13 +6,13 @@
 /*   By: ael-haib <ael-haib@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:17:05 by ael-haib          #+#    #+#             */
-/*   Updated: 2024/07/11 17:17:08 by ael-haib         ###   ########.fr       */
+/*   Updated: 2024/07/13 17:58:12 by ael-haib         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*get_freed(char **p1, char **p2)
+void	*get_free(char **p1, char **p2)
 {
 	if (p1 && *p1 != NULL)
 	{
@@ -27,14 +27,14 @@ void	*get_freed(char **p1, char **p2)
 	return (NULL);
 }
 
-char	*get_line_(char **buffer)
+char	*get_the_line(char **buffer)
 {
 	char	*line;
 	char	*tmp;
 	size_t	i;
 
 	if (!*buffer || !**buffer)
-		return (get_freed(buffer, NULL));
+		return (get_free(buffer, NULL));
 	i = 0;
 	while ((*buffer)[i] != '\n' && (*buffer)[i] != '\0')
 		i++;
@@ -43,11 +43,11 @@ char	*get_line_(char **buffer)
 	tmp = *buffer;
 	line = ft_substr(*buffer, 0, i);
 	if (!line)
-		return (get_freed(buffer, NULL));
+		return (get_free(buffer, NULL));
 	*buffer = ft_substr(*buffer, i, ft_strlen(*buffer + i));
 	if (!*buffer)
-		return (get_freed(&tmp, &line));
-	get_freed(&tmp, NULL);
+		return (get_free(&tmp, &line));
+	get_free(&tmp, NULL);
 	return (line);
 }
 
@@ -64,39 +64,39 @@ char	*get_join(char *s1, char *s2)
 	len_s2 = ft_strlen(s2);
 	str = malloc(sizeof(char) * (len_s1 + len_s2 + 1));
 	if (!str)
-		return (get_freed(&s1, &s2));
+		return (get_free(&s1, &s2));
 	ft_memcpy(str, s1, len_s1);
 	ft_memcpy(str + len_s1, s2, len_s2);
 	str[len_s2 + len_s1] = '\0';
-	get_freed(&s1, NULL);
+	get_free(&s1, NULL);
 	return (str);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*buffer;
-	char		*buff_read;
-	int			nbyte;
+	char		*read_buffer;
+	int			byte_number;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	nbyte = 1;
-	buff_read = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buff_read)
-		return (get_freed(&buffer, NULL));
-	while (!ft_strchr(buffer, '\n') && nbyte > 0)
+	byte_number = 1;
+	read_buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!read_buffer)
+		return (get_free(&buffer, NULL));
+	while (!ft_strchr(buffer, '\n') && byte_number > 0)
 	{
-		nbyte = read(fd, buff_read, BUFFER_SIZE);
-		if (nbyte == -1)
-			return (get_freed(&buffer, &buff_read));
-		if (nbyte > 0)
+		byte_number = read(fd, read_buffer, BUFFER_SIZE);
+		if (byte_number == -1)
+			return (get_free(&buffer, &read_buffer));
+		if (byte_number > 0)
 		{
-			buff_read[nbyte] = '\0';
-			buffer = get_join(buffer, buff_read);
+			read_buffer[byte_number] = '\0';
+			buffer = get_join(buffer, read_buffer);
 			if (!buffer)
 				return (NULL);
 		}
 	}
-	free(buff_read);
-	return (get_line_(&buffer));
+	free(read_buffer);
+	return (get_the_line(&buffer));
 }
